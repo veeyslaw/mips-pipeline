@@ -15,7 +15,7 @@
 	În afară de forwarding-ul reprezentat explicit în diagrama din curs – WB → EX si M → EX, am adaugat forwarding şi pentru cazul
 	lw reg_x, y
 	sw reg_x, z
-de tip WB → EX, care e lăsat ca temă în H&P, cât şi pentru instrucţiunile similare cu beq de tip M → ID.
+	de tip WB → EX, care e lăsat ca temă în H&P, cât şi pentru instrucţiunile similare cu beq de tip M → ID.
 
 	Hazard-urile care nu pot fi remediate prin forwarding sunt tratate introducând un buble sau, cel mult, doua în pipeline.
 
