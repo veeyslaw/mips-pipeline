@@ -1,0 +1,16 @@
+// LENGHTS
+`define LEN_WORD 32
+`define LEN_OP_CODE 6
+
+`define EXTEND_FROM 16
+`define J_EXTEND_FROM 26
+`define EXTEND_TO `LEN_WORD
+
+// REG FILE
+`define LEN_REG_FILE_ADDR 5
+`define SIZE_REG_FILE 32
+
+// MEMORY
+`define SIZE_MEM_CELL 32
+`define SIZE_MEM 256
+

@@ -1,0 +1,4 @@
+*.vcd
+*.vvp
+Outputs/dump_data_mem.txt
+Outputs/dump_reg_file.txt

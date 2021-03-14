@@ -1,0 +1,72 @@
+//////////////////////////////////////////////////////////////////
+// - constantele în zecimal                                     //
+// - "//" la începutul liniei == comentariu                     //
+// - puteţi folosi etichete                                     //
+// - puteţi folosi orice registru în formatul cu $              //
+// - instrucţiuni utilizabile - add, addi, sub, nor, and, or,   //
+//  ori, andi, beq, lw, sw, j, nop                              //
+//                     											//
+// - în programul iniţial e comentată prima aparitie a fiecărui //
+// tip de remediere a hazardurilor, înainte de instrucţiunea    //
+// unde e aplicat (excepţie flush la ieşire din buclă)          //
+//////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+///// prima secţiune copiază tabloul [6 - 12) din memorie la [0 - 6) //
+///////////////////////////////////////////////////////////////////////
+
+
+// array base
+addi $t0, $zero, 6
+
+// array length
+//////////////////// M -> EX forward
+add $s0, $t0, $zero
+
+// counter
+add $t1, $zero, $zero
+
+loop:
+	//////////////////// buble(stall) + M -> ID forward
+	beq $t1, $s0, loop_done
+	add $t2, $t0, $t1
+	add $t3, $zero, $t1
+	
+	//////////////////// WB -> EX forward
+	lw $t4, 0($t2)
+	
+	//////////////////// WB -> M forward
+	sw $t4, 0($t3)
+	addi $t1, $t1, 1
+	j loop
+	
+	//////////////////// buble(flush) ^ la salt la loop
+loop_done:
+//////////////////// buble(flush) \/ la salt aici 
+
+
+////////////////////////////////////////////////////
+///// a doua foloseşte instrucţiunile             //
+///// 	şi demonstrează tipurile de hazard rămase //
+////////////////////////////////////////////////////
+
+
+lw $s1, 0($zero)
+
+//////////////////// buble(stall)
+sub $s2, $zero, $s1
+lw $s3, 0($zero)
+
+//////////////////// 2 x buble(stall)
+beq $s3, $t0, 1
+and $s4, $t0, $t2
+and $s5, $t0, $t3
+nor $s6, $t0, $t1
+or $s7, $t3, $t2
+beq $s6, $t0, 1
+
+//////////////////// M -> ID forward
+ori $t8, $t0, 8
+andi $ra, $t0, 6
+
